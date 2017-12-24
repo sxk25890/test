@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+
+var flavorSelection;
+var sizeSelection = false;
+var quantitySelection;
+var toppingSelection = false;
+
+
+function price(){
+	var x = 1.00;
+	var flavour = document.getElementById("flavours").value;
+	if(flavour == "chocolate"){
+		 x=1.00;
+		 document.getElementById("image").src = "chocolate1.jpg";
+	}else if(flavour == "mint"){
+		 x=1.25;
+		  document.getElementById("image").src = "chips1.jpg";
+	}else if(flavour == "strawberry"){
+		 x=1.50;
+		  document.getElementById("image").src = "strawberry2.jpg";
+	}else if(flavour == "vanilla"){
+		 x=1.50;
+		  document.getElementById("image").src = "vanilla1.jpg";
+	}
+	
+	//alert(x);
+	
+	if(document.getElementById("size1").checked){
+		var radio = document.getElementById("size1").value;
+		 document.getElementById("size1").checked = false;
+	}else if(document.getElementById("size2").checked){
+		var radio = document.getElementById("size2").value;
+		 document.getElementById("size2").checked = false;
+	}else if(document.getElementById("size3").checked){
+		var radio = document.getElementById("size3").value;
+		 document.getElementById("size3").checked = false;
+	}
+		
+	var y = 0.00;
+	if(radio === "small"){
+		 y=6.00;
+	}else if(radio === "medium"){
+		 y=9.00;
+	}else if(radio === "large"){
+		 y=11.00;
+	}
+	//alert(y);
+	
+	var quantity = document.getElementById("quantity").value;
+	//alert(quantity);
+	
+	var checks = document.getElementsByName('topping');
+	var str="";
+	var val=1.00;
+	
+	for(i = 0; i < 2;i++){
+		if(checks[i].checked){
+			str += checks[i].value + " ";
+		}
+	}
+	if(str === "salted caramel "){
+		//alert("inside1");
+		val = 1.70;
+	}else if(str === "sugar free strawbeery "){
+		//alert("inside2");
+		val = 1.50;
+	}else if(str === "salted caramel sugar free strawbeery "){
+		//alert("inside");
+		val=1.10;
+	}
+	//alert(val);
+	
+	var msg = (quantity * (y + x + val));
+	
+	document.getElementById("message").innerHTML="The total cost is $"+msg;
+	document.getElementById("time").innerHTML="Your order will be delivered in about "+Math.floor((Math.random()*20) + 25);
+}
+
+function myFlavorsSelected() {
+	flavorSelection = document.getElementById("flavours").value;
+	disableOrderButton();
+}
+
+function radioSelection() {
+	var sizeValArray = document.getElementsByName('sizeVal');
+	//sizeSelection = arrayUtil(sizeValArray);
+	sizeValArray.forEach(function(eachElement) {
+		if (eachElement.checked) {
+			sizeSelection = true;
+		}
+	});
+	disableOrderButton();
+}
+
+function toppingsSelection() {
+	var toppingsArr = document.getElementsByName('topping');
+	//toppingSelection = arrayUtil(toppingsArr);
+	toppingsArr.forEach(function(eachElement) {
+		if (eachElement.checked) {
+			toppingSelection = true;
+		}
+	});
+	disableOrderButton();
+}
+
+
+function inputSelection() {
+	var quantity = document.getElementById("quantity").value;
+	if (quantity < 1 || quantity > 10) {
+        document.getElementById("errorMessage").innerHTML = "Input not valid";
+        quantitySelection = undefined;
+    } else {
+    	quantitySelection = quantity;
+    }
+    disableOrderButton();
+}
+
+function disableOrderButton() {
+	if (!flavorSelection || !sizeSelection || !quantitySelection || !toppingSelection) {
+		document.getElementById("orderButton").disabled = true;
+	} else {
+		document.getElementById("orderButton").disabled = false;
+	}
+}
+function changeColor(x) {
+    x.style.color = "red";
+}
+
+ </script>
+
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h2 align="center">Bearcat Ice Cream Order Form</h2>
+	<form>
+	<table align="center">
+	<tr>
+		<td>Flavor</td>
+		<td>
+			<select name="flavours" id="flavours" onchange="myFlavorsSelected()">
+			    <option value="" selected>select your flavor</option>
+				<option value="chocolate">Chocolate</option>
+				<option value="mint">Mint Chocolate Chip</option>
+				<option value="strawberry">Strawberry</option>
+				<option value="vanilla">Vanilla</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Size</td>
+		<td onchange="radioSelection()">			
+			<input type="radio" name="sizeVal" id="size1" value="small"/> Small<br>
+			<input type="radio" name="sizeVal" id="size2" value="medium"/> Medium<br>
+			<input type="radio" name="sizeVal" id="size3" value="large"/> Large<br>			
+		</td>
+	</tr>
+	<tr>
+		<td>Quantity(1-10)</td>
+		<td>
+			<input onchange="inputSelection()" type="number" min="1" max="10" step="1" id="quantity" value=""/>
+			<span id="errorMessage"></span>
+		</td>
+	</tr>
+	<tr>
+		<td>Extra Topping</td>
+		<td onchange="toppingsSelection()">
+			<input type="checkbox" name="topping" value="salted caramel"> Salted Caramel<br>
+ 			<input type="checkbox" name="topping" value="sugar free strawbeery"> Sugar Free Strawberry<br>
+		</td>
+	</tr>
+	<tr>
+		<td><input type="button" id="orderButton" value="Order" onclick="price()" onmouseover="changeColor(this)"/></td>
+	</tr>
+	<tr>
+		<td><p id="message" style="color:blue;"></p><p id="time" style="color:blue;"></p></td>
+		<img id="image" src="">
+	</tr>
+	</table>	
+	</form>
+
+</body>
+<script type="text/javascript">
+	
+disableOrderButton();
+</script>>
+</html>
