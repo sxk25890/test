@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+function price(){
+	var x = 1.00;
+	var flavour = document.getElementById("flavours").value;
+	if(flavour == "chocolate"){
+		 x=1.00;
+	}else if(flavour == "mint"){
+		 x=1.25;
+	}else if(flavour == "strawberry"){
+		 x=1.50;
+	}else if(flavour == "vanilla"){
+		 x=1.50;
+	}
+	
+	//alert(x);
+	
+	if(document.getElementById("size1").checked){
+		var radio = document.getElementById("size1").value;
+		 document.getElementById("size1").checked = false;
+	}else if(document.getElementById("size2").checked){
+		var radio = document.getElementById("size2").value;
+		 document.getElementById("size2").checked = false;
+	}else if(document.getElementById("size3").checked){
+		var radio = document.getElementById("size3").value;
+		 document.getElementById("size3").checked = false;
+	}
+		
+	var y = 0.00;
+	if(radio === "small"){
+		 y=6.00;
+	}else if(radio === "medium"){
+		 y=9.00;
+	}else if(radio === "large"){
+		 y=11.00;
+	}
+	//alert(y);
+	
+	var quantity = document.getElementById("quantity").value;
+	//alert(quantity);
+	if(quantity > 0){
+		//alert(quantity > 0);
+		document.getElementById("quantity").disabled = false;
+	}
+	
+	var checks = document.getElementsByName('topping');
+	var str="";
+	var val=1.00;
+	
+	for(i = 0; i < 2;i++){
+		if(checks[i].checked){
+			str += checks[i].value + " ";
+		}
+	}
+	if(str === "salted caramel "){
+		//alert("inside1");
+		val = 1.70;
+	}else if(str === "sugar free strawbeery "){
+		//alert("inside2");
+		val = 1.50;
+	}else if(str === "salted caramel sugar free strawbeery "){
+		//alert("inside");
+		val=1.10;
+	}
+	//alert(val);
+	
+	var msg = (quantity * (y + x + val));
+	
+	if(radio==="small"){	
+	document.getElementById("message").innerHTML="The total cost for small icecream is $"+msg;
+	document.getElementById("time").innerHTML="Your order will be delivered in about "+Math.floor((Math.random()*20) + 25);
+	}if(radio==="medium"){	
+		document.getElementById("message").innerHTML="The total cost is medium iceream $"+msg;
+		document.getElementById("time").innerHTML="Your order will be delivered in about "+Math.floor((Math.random()*20) + 25);
+		}if(radio==="large"){	
+			document.getElementById("message").innerHTML="The total cost is large icecream $"+msg;
+			document.getElementById("time").innerHTML="Your order will be delivered in about "+Math.floor((Math.random()*20) + 25);
+			}
+}
+
+function button(){
+	var quantity = document.getElementById("quantity").value;
+	//alert(quantity);
+	if(quantity > 0){
+		//alert(quantity > 0);
+		document.getElementById("quantity").disabled = false;
+	}	
+}
+</script>
+<style type="text/css">
+.button:hover {
+    color:blue;
+}
+</style>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h2 align="center">Bearcat Ice Cream Order Form</h2>
+	<form>
+	<table align="center">
+	<tr>
+		<td>Flavor</td>
+		<td>
+			<select name="flavours" id="flavours" placeholder="Select a Flavour" required="required">
+				<option value="chocolate">Chocolate</option>
+				<option value="mint">Mint Chocolate Chip</option>
+				<option value="strawberry">Strawberry</option>
+				<option value="vanilla">Vanilla</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Size</td>
+		<td>
+		
+			<input type="radio" id="size1" value="small"/> Small<br>
+			<input type="radio" id="size2" value="medium"/> Medium<br>
+			<input type="radio" id="size3" value="large"/> Large<br>
+		
+		</td>
+	</tr>
+	<tr>
+		<td>Quantity(1-10)</td>
+		<td><input type="number" id="quantity" value="0" min="0" max="10" onclick="button()"/></td>
+	</tr>
+	<tr>
+		<td>Extra Topping</td>
+		<td>
+			<input type="checkbox" name="topping" value="salted caramel"> Salted Caramel<br>
+ 			<input type="checkbox" name="topping" value="sugar free strawbeery"> Sugar Free Strawberry<br>
+		</td>
+	</tr>
+	<tr>
+		<td><input type="button" id="button" value="Order" onclick="price()"/></td>
+	</tr>
+	<tr>
+		<td><p id="message" style="color:blue;"></p><p id="time" style="color:blue;"></p></td>
+	</tr>
+	</table>	
+	</form>
+
+</body>
+</html>
